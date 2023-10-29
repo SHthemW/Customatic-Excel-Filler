@@ -13,7 +13,7 @@ public sealed class Program
         IScriptFactory factory = new PythonScriptFactory(LocalPath.ScriptPath);
         var script = factory.Create("test.py");
 
-        ScriptFunction testFun = new ConnectionTester(script);
+        ScriptFunction<Tester, string> testFun = new ConnectionTester(script, "test");
         var result = testFun.Execute(testCase);
 
         Console.WriteLine(result);
@@ -22,5 +22,7 @@ public sealed class Program
         using var table = tableFactory.Create("BulletShooterDef");
 
         Console.WriteLine(table.Table);
+
+        Console.ReadKey();
     }
 }

@@ -1,20 +1,20 @@
-﻿using System;
+﻿using Microsoft.Scripting.Hosting;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CXlF.Entities
 {
     public readonly struct Script
     {
         public string FullPath { get; private init; }
-        public dynamic Program { get; private init; }
+        public ScriptScope Scope { get; private init; }
+        public ScriptSource Source { get; private init; }
 
-        public Script(string fullPath, dynamic program)
+        public Script(string fullPath, ScriptScope scope, ScriptSource source)
         {
             FullPath = fullPath ?? throw new ArgumentNullException(nameof(fullPath));
-            Program = program ?? throw new ArgumentNullException(nameof(program));
+            Source = source ?? throw new ArgumentNullException(nameof(source));
+            Scope = scope ?? throw new ArgumentNullException(nameof(scope));
         }
     }
 }

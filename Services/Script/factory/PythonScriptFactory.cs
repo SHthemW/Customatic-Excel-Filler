@@ -10,19 +10,23 @@ public sealed class PythonScriptFactory : FileService, IScriptFactory
 {
     protected override string _suffix => ".py";
 
-    public PythonScriptFactory(string filePath) : base(filePath) { }
+    private   readonly ScriptEngine _engine;
+
+    public PythonScriptFactory(string filePath) : base(filePath) 
+    {
+        _engine = Python.CreateEngine();
+    }
     Script IScriptFactory.Create(string scriptName)
     {
-        return new Script(GetFullPath(scriptName), GetProgram(scriptName));
+        return new Script(GetFullPath(scriptName), GetScope(scriptName), GetSource(scriptName));
     }
 
-    private dynamic GetProgram(string scriptName)
+    private ScriptScope GetScope(string scriptName)
     {
-        ScriptEngine pyEngine = Python.CreateEngine();
         ScriptScope? scope;
         try
         {
-            scope = pyEngine.ExecuteFile(GetFullPath(scriptName));
+            scope = _engine.ExecuteFile(GetFullPath(scriptName));
         }
         catch (SyntaxErrorException e)
         {
@@ -30,5 +34,9 @@ public sealed class PythonScriptFactory : FileService, IScriptFactory
             return null!;
         }
         return scope;
+    }
+    private ScriptSource GetSource(string scriptName)
+    {
+        return _engine.CreateScriptSourceFromFile(GetFullPath(scriptName));
     }
 }

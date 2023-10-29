@@ -1,14 +1,19 @@
 ﻿using CXlF.Entities;
+using IronPython.Runtime;
 
 namespace CXlF.Services.Scripts
 {
-    public sealed class ConnectionTester : ScriptFunction
+    public delegate string Tester(string testMsg);
+
+    public sealed class ConnectionTester : ScriptFunction<Tester, string>
     {
-        public ConnectionTester(Script script) : base(script) { }
-        public override dynamic Execute(params dynamic[] args)
+        public ConnectionTester(Script script, string funcName) : base(script, funcName) 
+        { 
+
+        }
+        public override string Execute(params dynamic[] args)
         {
-            var result = _script.Program.test(args[0]);
-            return result;
+            return _function.Invoke((string)args[0]);
         }
     }
 }
