@@ -10,7 +10,12 @@
 
   <ItemGroup>
     <PackageReference Include="IronPython" Version="3.4.1" />
+    <PackageReference Include="NPOI" Version="2.6.2" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Table\services\" />
   </ItemGroup>
 
 </Project>

@@ -6,22 +6,16 @@ using Microsoft.Scripting.Hosting;
 
 namespace CXlF.Services.Scripts;
 
-public sealed class PythonScriptFactory : IScriptFactory
+public sealed class PythonScriptFactory : FileService, IScriptFactory
 {
-    private const string SCRIPT_SUFFIX = ".py";
+    protected override string _suffix => ".py";
 
-    private readonly string _scriptPath = string.Empty;
-
-    public PythonScriptFactory(string scriptPath)
-    {
-        _scriptPath = scriptPath ?? throw new ArgumentNullException(nameof(scriptPath));
-    }
+    public PythonScriptFactory(string filePath) : base(filePath) { }
     Script IScriptFactory.Create(string scriptName)
     {
         return new Script(GetFullPath(scriptName), GetProgram(scriptName));
     }
-    
-    private PythonScriptFactory() { }
+
     private dynamic GetProgram(string scriptName)
     {
         ScriptEngine pyEngine = Python.CreateEngine();
@@ -36,16 +30,5 @@ public sealed class PythonScriptFactory : IScriptFactory
             return null!;
         }
         return scope;
-    }
-    private string GetFullPath(string scriptName)
-    {
-        var fullPath = scriptName.EndsWith(SCRIPT_SUFFIX)
-        ? _scriptPath + scriptName
-        : _scriptPath + scriptName + SCRIPT_SUFFIX;
-
-        if (!File.Exists(fullPath))
-            throw new FileNotFoundException(fullPath);
-
-        return fullPath;
     }
 }
