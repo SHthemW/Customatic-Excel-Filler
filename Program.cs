@@ -12,8 +12,8 @@ public sealed class Program
         IScriptFactory factory = new PythonScriptFactory(LocalPath.ScriptPath);
         var script = factory.Create("test.py");
 
-        IScriptFunction testFn = new ConnectionTester(script);
-        var result = testFn.Execute(testCase);
+        ScriptFunction testFun = new ConnectionTester(script);
+        var result = testFun.Execute(testCase);
 
         Console.WriteLine(result);
     }
