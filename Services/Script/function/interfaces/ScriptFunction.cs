@@ -33,9 +33,9 @@ namespace CXlF.Services.Scripts
         private TExtFn ExecuteScriptAndGetFunc()
         {
             _script.Source.Execute();
-            return _script.Scope.GetVariable<TExtFn>(name: ScriptFuncName());
+            return _script.Scope.GetVariable<TExtFn>(name: CheckAndGetExtFnName());
 
-            string ScriptFuncName()
+            string CheckAndGetExtFnName()
             {
                 if (ExtFnNm != typeof(TExtFn).Name)
                     Console.WriteLine("warning: exteral function name not same as its type.");
