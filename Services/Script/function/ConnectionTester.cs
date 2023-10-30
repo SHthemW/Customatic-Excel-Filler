@@ -2,14 +2,15 @@
 
 namespace CXlF.Services.Scripts
 {
-    public delegate string Tester(string testMsg);
+    public delegate string test(string testMsg);
 
-    public sealed class ConnectionTester : ScriptFunction<Tester, string>
-    {
-        public ConnectionTester(Script script, string funcName) : base(script, funcName) 
+    public sealed class ConnectionTester : ScriptFunction<test, string>
+    {      
+        public ConnectionTester(Script script) : base(script) 
         { 
-
+            
         }
+        public override string ExtFnNm => nameof(test);
         public override string Execute(params dynamic[] args)
         {
             return _function.Invoke((string)args[0]);

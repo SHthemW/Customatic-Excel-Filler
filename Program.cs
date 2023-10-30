@@ -13,10 +13,10 @@ public sealed class Program
         IScriptFactory factory = new PythonScriptFactory(LocalPath.ScriptPath);
         var script = factory.Create("test.py");
 
-        ScriptFunction<Tester, string> testFun = new ConnectionTester(script, "test");
+        ScriptFunction<test, string> testFun = new ConnectionTester(script);
         var rst_test = testFun.Execute(testCase);
 
-        ScriptFunction<default_file, string> fileFun = new DefaultEffectFileGetter(script, nameof(default_file));
+        ScriptFunction<default_file, string> fileFun = new DefaultEffectFileGetter(script);
         var rst_file = fileFun.Execute();
 
         Console.WriteLine(rst_test + "\n" + rst_file);
