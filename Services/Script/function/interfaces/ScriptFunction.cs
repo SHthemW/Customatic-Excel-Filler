@@ -22,10 +22,11 @@ namespace CXlF.Services.Scripts
         /// external function name.
         /// </summary>
         /// <remarks>
-        /// usually it should be same with function <see cref="TExtFn"/>.
-        /// if not, program <br/> will execute as that name you override
-        /// with a warning.
+        /// usually, the value of this field should be same with the name <br/>
+        /// of function <see cref="TExtFn"/>. IF NOT, the program will execute 
+        /// with the <br/> name that this field assigned, and throw a warning.
         /// </remarks>
+        /// <seealso cref="ExecuteScriptAndGetFunc"/>
         public abstract string ExtFnNm { get; }
 
         private ScriptFunction() { } 
