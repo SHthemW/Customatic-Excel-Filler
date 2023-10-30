@@ -14,9 +14,12 @@ public sealed class Program
         var script = factory.Create("test.py");
 
         ScriptFunction<Tester, string> testFun = new ConnectionTester(script, "test");
-        var result = testFun.Execute(testCase);
+        var rst_test = testFun.Execute(testCase);
 
-        Console.WriteLine(result);
+        ScriptFunction<default_file, string> fileFun = new DefaultEffectFileGetter(script, nameof(default_file));
+        var rst_file = fileFun.Execute();
+
+        Console.WriteLine(rst_test + "\n" + rst_file);
 
         ITableFactory tableFactory = new XlsxTableFactory(LocalPath.TablePath);
         using var table = tableFactory.Create("BulletShooterDef");

@@ -4,4 +4,10 @@ def test(msg):
         return str("hello! " + msg)
     except Exception as e:
         return str("err" + str(e))
+
+
+def default_file():
+    return "hi, I am default."
+
+
     
