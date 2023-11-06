@@ -22,9 +22,21 @@ public sealed class Program
         Console.WriteLine(rst_test + "\n" + rst_file);
 
         ITableFactory tableFactory = new XlsxTableFactory(LocalPath.TablePath);
-        using var table = tableFactory.Create("BulletShooterDef");
+        using var tableFile = tableFactory.Create("BulletShooterDef");
 
-        Console.WriteLine(table.Table);
+        TableContentParser tableContent = new(tableFile, "Data");
+        var prevRows = tableContent.GetPreviousRows();
+
+        foreach (var row in prevRows)
+        {
+            foreach (var cell in row)
+            {
+                Console.Write(cell + " ");
+            }
+            Console.WriteLine("\n");
+        }
+
+        Console.WriteLine(tableFile.Table);
 
         Console.ReadKey();
     }
