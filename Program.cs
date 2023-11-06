@@ -1,4 +1,5 @@
 ﻿using CXlF.Services.Scripts;
+using CXlF.Services.Scripts.function;
 using CXlF.Services.Table;
 using CXlF.Utilties.Local;
 
@@ -27,16 +28,15 @@ public sealed class Program
         TableContentParser tableContent = new(tableFile, "Data");
         var prevRows = tableContent.GetPreviousRows();
 
-        foreach (var row in prevRows)
-        {
-            foreach (var cell in row)
-            {
-                Console.Write(cell + " ");
-            }
-            Console.WriteLine("\n");
-        }
+        var tabNxtRowScript = factory.Create("excel_test.py");
 
-        Console.WriteLine(tableFile.Table);
+        ScriptFunction<get_next_row, Dictionary<string, dynamic>> nextrowFun = 
+            new TableNextRowGetter(tabNxtRowScript);
+
+        var rst_nextRow = nextrowFun.Execute(prevRows);
+
+        foreach (var row in rst_nextRow)
+            Console.WriteLine(row);
 
         Console.ReadKey();
     }

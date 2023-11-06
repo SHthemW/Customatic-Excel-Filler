@@ -33,7 +33,8 @@ namespace CXlF.Services.Scripts
         private TExtFn ExecuteScriptAndGetFunc()
         {
             _script.Source.Execute();
-            return _script.Scope.GetVariable<TExtFn>(name: CheckAndGetExtFnName());
+            return _script.Scope.GetVariable<TExtFn>(name: CheckAndGetExtFnName()) 
+                ?? throw new Exception($"function named {CheckAndGetExtFnName()} was not found.");
 
             string CheckAndGetExtFnName()
             {
